@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\GameLoop\CooldownUI.cs" />
     <Compile Include="Assets\Scripts\GameLoop\GameManager.cs" />
     <Compile Include="Assets\Scripts\Core\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Core\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Core\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Arena\ArenaManager.cs" />
   </ItemGroup>

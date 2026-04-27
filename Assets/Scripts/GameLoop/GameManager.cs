@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
         {
             player2Score++;
             UpdateScoreUI();
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlayDeath();
+            }
             StartCoroutine(ResetRound());
         }
 
@@ -48,6 +52,10 @@ public class GameManager : MonoBehaviour
         {
             player1Score++;
             UpdateScoreUI();
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.PlayDeath();
+            }
             StartCoroutine(ResetRound());
         }
     }

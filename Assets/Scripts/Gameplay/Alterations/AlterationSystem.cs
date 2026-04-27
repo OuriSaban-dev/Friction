@@ -20,6 +20,11 @@ public class AlterationSystem : MonoBehaviour
         pulse.Initialize();
 
         activeAlterations.Add(pulse);
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayPulse();
+        }
     }
 
     private void Update()
@@ -46,6 +51,11 @@ public class AlterationSystem : MonoBehaviour
         gravity.Initialize();
 
         activeAlterations.Add(gravity);
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayGravity();
+        }
     }
 
     public void SpawnPhase(Vector3 position, Vector3 direction)
@@ -60,5 +70,10 @@ public class AlterationSystem : MonoBehaviour
         phase.SetTarget(target);
 
         activeAlterations.Add(phase);
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayPhase();
+        }
     }
 }
