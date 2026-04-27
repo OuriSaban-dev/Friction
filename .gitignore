@@ -1,0 +1,16 @@
+# Unity generated files
+[Ll]ibrary/
+
+[Tt]emp/
+[Bb]uild/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+*.csproj
+*.sln
+*.user
+*.pibd
+*.booproj
+*.svd
+*.pdb
+*.mdb
