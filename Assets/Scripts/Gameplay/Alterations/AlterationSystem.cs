@@ -3,21 +3,25 @@ using UnityEngine;
 
 public class AlterationSystem : MonoBehaviour
 {
+    [Header("Players")]
     public List<PlayerController> players = new List<PlayerController>();
 
+    [Header("Prefabs")]
     public PulseAlteration pulsePrefab;
+    public GravityAlteration gravityPrefab;
+    public PhaseAlteration phasePrefab;
+
+    [Header("Phase")]
+    public float phaseDistance = 6f;
 
     private List<AlterationBase> activeAlterations = new List<AlterationBase>();
 
-    public GravityAlteration gravityPrefab;
-
-    public PhaseAlteration phasePrefab;
-    public float phaseDistance = 6f;
-
-    public void SpawnPulse(Vector3 position)
+    public void SpawnPulse(Vector3 position, PlayerController owner)
     {
+        position.y = 0.3f;
+
         PulseAlteration pulse = Instantiate(pulsePrefab, position, Quaternion.identity);
-        pulse.Initialize();
+        pulse.Initialize(owner);
 
         activeAlterations.Add(pulse);
 
@@ -27,28 +31,12 @@ public class AlterationSystem : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        for (int i = activeAlterations.Count - 1; i >= 0; i--)
-        {
-            var alt = activeAlterations[i];
-
-            alt.Tick(players, Time.deltaTime);
-
-            if (alt.IsExpired)
-            {
-                Destroy(alt.gameObject);
-                activeAlterations.RemoveAt(i);
-            }
-        }
-    }
-
-    public void SpawnGravity(Vector3 position)
+    public void SpawnGravity(Vector3 position, PlayerController owner)
     {
         position.y = 0.3f;
 
         GravityAlteration gravity = Instantiate(gravityPrefab, position, Quaternion.identity);
-        gravity.Initialize();
+        gravity.Initialize(owner);
 
         activeAlterations.Add(gravity);
 
@@ -58,7 +46,7 @@ public class AlterationSystem : MonoBehaviour
         }
     }
 
-    public void SpawnPhase(Vector3 position, Vector3 direction)
+    public void SpawnPhase(Vector3 position, Vector3 direction, PlayerController owner)
     {
         position.y = 0.3f;
 
@@ -66,7 +54,7 @@ public class AlterationSystem : MonoBehaviour
         target.y = 0.3f;
 
         PhaseAlteration phase = Instantiate(phasePrefab, position, Quaternion.identity);
-        phase.Initialize();
+        phase.Initialize(owner);
         phase.SetTarget(target);
 
         activeAlterations.Add(phase);
@@ -75,5 +63,34 @@ public class AlterationSystem : MonoBehaviour
         {
             SoundManager.Instance.PlayPhase();
         }
+    }
+
+    private void Update()
+    {
+        for (int i = activeAlterations.Count - 1; i >= 0; i--)
+        {
+            AlterationBase alteration = activeAlterations[i];
+
+            alteration.Tick(players, Time.deltaTime);
+
+            if (alteration.IsExpired)
+            {
+                activeAlterations.RemoveAt(i);
+                Destroy(alteration.gameObject);
+            }
+        }
+    }
+
+    public void ClearAll()
+    {
+        foreach (AlterationBase alteration in activeAlterations)
+        {
+            if (alteration != null)
+            {
+                Destroy(alteration.gameObject);
+            }
+        }
+
+        activeAlterations.Clear();
     }
 }

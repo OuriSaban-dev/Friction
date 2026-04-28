@@ -835,17 +835,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 266742e6ec4c78546864133cc5729471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovementSystem
-  maxSpeed: 14
-  startSpeed: 5.5
-  acceleration: 16
-  deceleration: 30
-  turnAcceleration: 44
-  impulseDecay: 7
-  maxImpulseSpeed: 22
-  counterInputMultiplier: 0.5
-  impactControlLockDuration: 0.2
-  impactControlMultiplier: 0.25
-  controlledVelocityCutOnImpact: 0.25
+  maxSpeed: 11
+  acceleration: 120
+  deceleration: 90
+  turnResponsiveness: 14
+  maxExternalSpeed: 28
 --- !u!114 &715762779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1016,17 +1010,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 266742e6ec4c78546864133cc5729471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovementSystem
-  maxSpeed: 14
-  startSpeed: 5.5
-  acceleration: 16
-  deceleration: 30
-  turnAcceleration: 44
-  impulseDecay: 7
-  maxImpulseSpeed: 22
-  counterInputMultiplier: 0.5
-  impactControlLockDuration: 0.2
-  impactControlMultiplier: 0.25
-  controlledVelocityCutOnImpact: 0.25
+  maxSpeed: 10.5
+  acceleration: 70
+  deceleration: 90
+  turnResponsiveness: 14
+  maxExternalSpeed: 28
 --- !u!114 &877334532
 MonoBehaviour:
   m_ObjectHideFlags: 0

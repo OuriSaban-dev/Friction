@@ -63,20 +63,20 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(pulseKey) && pulseCd <= 0f)
         {
-            alterationSystem.SpawnPulse(transform.position);
+            alterationSystem.SpawnPulse(transform.position, this);
             pulseCd = pulseCooldown;
         }
 
         if (Input.GetKeyDown(gravityKey) && gravityCd <= 0f)
         {
-            alterationSystem.SpawnGravity(transform.position);
+            alterationSystem.SpawnGravity(transform.position, this);
             gravityCd = gravityCooldown;
         }
 
         if (Input.GetKeyDown(phaseKey) && phaseCd <= 0f)
         {
             Vector3 dir = transform.forward;
-            alterationSystem.SpawnPhase(transform.position, dir);
+            alterationSystem.SpawnPhase(transform.position, dir, this);
             phaseCd = phaseCooldown;
         }
     }

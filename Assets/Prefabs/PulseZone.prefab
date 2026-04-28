@@ -128,9 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a066b3047478b10438b4cde2ea7871ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PulseAlteration
-  radius: 3
-  duration: 0.6
-  force: 25
+  radius: 2.6
+  duration: 0.3
+  baseForce: 5
+  bonusForce: 7
+  ownerForceMultiplier: 0.25
 --- !u!114 &7880351616499341362
 MonoBehaviour:
   m_ObjectHideFlags: 0
