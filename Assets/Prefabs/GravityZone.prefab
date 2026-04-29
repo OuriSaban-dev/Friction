@@ -128,9 +128,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2f511f4266f18044b4d1a8b5db7ec91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GravityAlteration
-  radius: 4
-  duration: 1.4
-  force: 18
+  radius: 3.6
+  duration: 1.1
+  outerForce: 18
+  innerForce: 45
+  coreForce: 70
+  innerRadiusRatio: 0.55
+  coreRadiusRatio: 0.25
+  ownerForceMultiplier: 0.35
+  coreDamping: 18
 --- !u!114 &-4743599664500029409
 MonoBehaviour:
   m_ObjectHideFlags: 0

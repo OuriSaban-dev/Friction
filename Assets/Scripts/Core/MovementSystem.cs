@@ -17,13 +17,12 @@ public class MovementSystem : MonoBehaviour
     [Header("Impact Control")]
     public float impactControlLockDuration = 0.20f;
     public float impactControlMultiplier = 0.25f;
-
-    [Header("Impact Velocity Cut")]
     public float controlledVelocityCutOnImpact = 0.25f;
 
     private Vector3 inputDirection;
     private Vector3 controlledVelocity;
     private Vector3 impulseVelocity;
+
     private float impactLockTimer;
 
     public float CurrentSpeed => controlledVelocity.magnitude;
@@ -37,12 +36,22 @@ public class MovementSystem : MonoBehaviour
 
     public void AddExternalForce(Vector3 force)
     {
+        // casse une partie du mouvement contrôlé
         controlledVelocity *= controlledVelocityCutOnImpact;
 
         impulseVelocity += force;
         impulseVelocity = Vector3.ClampMagnitude(impulseVelocity, maxImpulseSpeed);
 
         impactLockTimer = impactControlLockDuration;
+    }
+
+    public void DampenImpulse(float amount)
+    {
+        impulseVelocity = Vector3.MoveTowards(
+            impulseVelocity,
+            Vector3.zero,
+            amount
+        );
     }
 
     public void ClearMovement()
@@ -66,7 +75,6 @@ public class MovementSystem : MonoBehaviour
         UpdateImpulseMovement();
 
         Vector3 finalVelocity = controlledVelocity + impulseVelocity;
-
         transform.position += finalVelocity * Time.deltaTime;
 
         if (finalVelocity.sqrMagnitude > 0.01f)

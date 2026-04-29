@@ -4,11 +4,11 @@ using UnityEngine;
 public class PulseAlteration : AlterationBase
 {
     [Header("Momentum Pulse")]
-    public float baseForce = 6f;
+    public float baseForce = 5f;
     public float bonusForce = 7f;
 
     [Header("Owner Control")]
-    public float ownerForceMultiplier = 0.35f;
+    public float ownerForceMultiplier = 0.25f;
 
     private HashSet<PlayerController> affected = new HashSet<PlayerController>();
 
@@ -21,20 +21,12 @@ public class PulseAlteration : AlterationBase
 
         if (direction.sqrMagnitude < 0.01f)
         {
-            if (owner != null)
-            {
-                direction = owner.transform.forward;
-            }
-            else
-            {
-                direction = Vector3.forward;
-            }
+            direction = owner != null ? owner.transform.forward : Vector3.forward;
         }
 
         direction.Normalize();
 
         float momentumRatio = GetOwnerMomentumRatio();
-
         float finalForce = baseForce + bonusForce * momentumRatio;
 
         if (player == owner)
@@ -42,22 +34,10 @@ public class PulseAlteration : AlterationBase
             finalForce *= ownerForceMultiplier;
         }
 
-        MovementSystem targetMovement = player.GetComponent<MovementSystem>();
-
-        if (targetMovement != null)
+        MovementSystem movement = player.GetComponent<MovementSystem>();
+        if (movement != null)
         {
-            targetMovement.AddExternalForce(direction * finalForce);
-        }
-
-        PlayerImpactFeedback feedback = player.GetComponent<PlayerImpactFeedback>();
-        if (feedback != null)
-        {
-            feedback.PlayImpact();
-        }
-
-        if (CameraShake.Instance != null)
-        {
-            CameraShake.Instance.Shake(0.08f, 0.15f);
+            movement.AddExternalForce(direction * finalForce);
         }
 
         affected.Add(player);
@@ -67,9 +47,9 @@ public class PulseAlteration : AlterationBase
     {
         if (owner == null) return 0f;
 
-        MovementSystem ownerMovement = owner.GetComponent<MovementSystem>();
-        if (ownerMovement == null) return 0f;
+        MovementSystem movement = owner.GetComponent<MovementSystem>();
+        if (movement == null) return 0f;
 
-        return Mathf.Clamp01(ownerMovement.CurrentSpeed / ownerMovement.MaxSpeed);
+        return Mathf.Clamp01(movement.CurrentSpeed / movement.MaxSpeed);
     }
 }

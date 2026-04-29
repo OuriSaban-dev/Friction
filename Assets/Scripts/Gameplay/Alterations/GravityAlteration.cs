@@ -2,31 +2,54 @@ using UnityEngine;
 
 public class GravityAlteration : AlterationBase
 {
-    public float force = 18f;
+    [Header("Forces")]
+    public float outerForce = 18f;
+    public float innerForce = 45f;
+    public float coreForce = 70f;
+
+    [Header("Zones")]
+    public float innerRadiusRatio = 0.55f;
+    public float coreRadiusRatio = 0.25f;
+
+    [Header("Owner Control")]
+    public float ownerForceMultiplier = 0.25f;
+
+    [Header("Core Stabilization")]
+    public float coreDamping = 14f;
 
     protected override void ApplyEffect(PlayerController player)
     {
-        Vector3 flatPlayerPosition = new Vector3(
-            player.transform.position.x,
-            0f,
-            player.transform.position.z
-        );
-
-        Vector3 flatGravityPosition = new Vector3(
-            transform.position.x,
-            0f,
-            transform.position.z
-        );
-
-        Vector3 direction = flatGravityPosition - flatPlayerPosition;
-
-        if (direction.sqrMagnitude < 0.01f) return;
-
-        direction.Normalize();
-
         MovementSystem movement = player.GetComponent<MovementSystem>();
-
         if (movement == null) return;
+
+        Vector3 toCenter = transform.position - player.transform.position;
+        toCenter.y = 0f;
+
+        float distance = toCenter.magnitude;
+        if (distance < 0.01f) return;
+
+        Vector3 direction = toCenter.normalized;
+
+        float innerRadius = radius * innerRadiusRatio;
+        float coreRadius = radius * coreRadiusRatio;
+
+        float force = outerForce;
+
+        if (distance <= innerRadius)
+        {
+            force = innerForce;
+        }
+
+        if (distance <= coreRadius)
+        {
+            force = coreForce;
+            movement.DampenImpulse(coreDamping * Time.deltaTime);
+        }
+
+        if (player == owner)
+        {
+            force *= ownerForceMultiplier;
+        }
 
         movement.AddExternalForce(direction * force * Time.deltaTime);
     }
