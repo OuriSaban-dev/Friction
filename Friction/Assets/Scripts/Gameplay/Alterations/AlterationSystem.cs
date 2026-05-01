@@ -29,6 +29,11 @@ public class AlterationSystem : MonoBehaviour
         {
             SoundManager.Instance.PlayPulse();
         }
+
+        if (MatchTelemetry.Instance != null)
+        {
+            MatchTelemetry.Instance.RecordAbility("Pulse", owner);
+        }
     }
 
     public void SpawnGravity(Vector3 position, PlayerController owner)
@@ -43,6 +48,11 @@ public class AlterationSystem : MonoBehaviour
         if (SoundManager.Instance != null)
         {
             SoundManager.Instance.PlayGravity();
+        }
+
+        if (MatchTelemetry.Instance != null)
+        {
+            MatchTelemetry.Instance.RecordAbility("Gravity", owner);
         }
     }
 
@@ -62,6 +72,11 @@ public class AlterationSystem : MonoBehaviour
         if (SoundManager.Instance != null)
         {
             SoundManager.Instance.PlayPhase();
+        }
+
+        if (MatchTelemetry.Instance != null)
+        {
+            MatchTelemetry.Instance.RecordAbility("Phase", owner);
         }
     }
 
